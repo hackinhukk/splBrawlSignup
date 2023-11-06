@@ -32,14 +32,28 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
         const accountsCleared = [];
         const accountsToReassign = {};
         const accountsToBoot = {};
-        for (const player in playersAssigned) {
+        const accountsMissingPeriod = [];
+     //   for (const player in playersAssigned) {
+        for (const player in accountsEstablishedFrays) {
             logger.info(`player: ${player}, playersAssigned[player] : ${playersAssigned[player]}`);
+            if (!playersAssigned[player] && playersAssigned[player] !== 0) {
+                accountsMissingPeriod.push(player);
+                continue;
+            }
+            // player hasn't been assigned
             if (playersAssigned[player] === accountsEstablishedFrays[player]) {
                 // this account is already signed up correctly
                 accountsCleared.push(player);
+                continue;
             }
+            // we could still have the player existing, but hasn't been assigned to correct fray
+            if (playersAssigned[player] || playersAssigned[player] === 0) {
+                accountsToReassign[player] = playersAssigned[player];
+            } 
         }
         logger.info(`accountsCleared: ${JSON.stringify(accountsCleared)} accountsCleared.length: ${accountsCleared.length}`);
+        logger.info(`accountsMissingPeriod :${JSON.stringify(accountsMissingPeriod)}, accountsMissingPeriod.length: ${accountsMissingPeriod.length}`)
+        logger.info(`accountsToReassign: ${JSON.stringify(accountsToReassign)}`);
         logger.info(`/services/accountsToReassign done`);
 
         return;
@@ -49,4 +63,5 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
     }
 }
 
+// TNT NOTE: we also need to loop over the playersAssigned and check to see if they're even on the list, if they aren't they need to be moved imo
 module.exports = {currentSignups};
