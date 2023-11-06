@@ -26,3 +26,8 @@ const accountsEstablishedFrays = {
     "alfwin": 15,
     "ehstala": 16,
 }
+
+module.exports = {
+    accountsEstablishedFrays,
+    accountsToSignup
+}
