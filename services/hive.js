@@ -1,6 +1,8 @@
 'use strict';
 const { Client, PrivateKey } = require('@hiveio/dhive');
 const logger = require("../util/pinologger");
+const { getPrivKey } = require("../util/helpers");
+const { _GUILD_ID } = require('../util/constants');
 
 const client = new Client([
     "https://api.hive.blog",
@@ -21,7 +23,7 @@ const fillBrawlSlots = async ({tournament_id}) => {
                 required_auths: [],
                 id: "sm_assign_fray",
                 json: JSON.stringify({
-                    guild_id,
+                    guild_id: _GUILD_ID,
                     tournament_id,
                     index,
                     player,

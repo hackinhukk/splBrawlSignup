@@ -2,26 +2,25 @@
 
 const helperService = require('../util/helpers');
 const logger = require("../util/pinologger");
+const { userLogin } = require('./splinterlands');
 
-const getPrivKey = () => {
+const getAccessToken = async() => {
     try {
-        logger.info(`/services/signup/getPrivKey start`);
+        logger.info(`/services/signup/getAccessToken start`);
+        // we need to login, so need to call everything for that
 
-        const accountArray = helperService.readAccountsFromTxt({
-            filename: "test.txt"
-        });
-
-        for (const account of accountArray) {
-            const {username, key} = helperService.readAccount({account});
-            logger.info(`username: ${username}, key: ${key}`);
-        }
-        return;
+        const {officerName, officerKey} = helperService.getPrivKey();
+        const access_token = await userLogin({username: officerName, key: officerKey});
+        
+        logger.info(`access_token: ${access_token}`);
+        logger.info(`/services/signup/getAccessToken done`);
+        return {access_token, username: officerName};
     } catch (err) {
-        logger.error(`/services/signup/getPrivKey error: ${err.message}`);
+        logger.error(`/services/signup/getAccessToken error: ${err.message}`);
         throw err;
     }
 }
 
 module.exports = {
-    getPrivKey
+    getAccessToken
 }

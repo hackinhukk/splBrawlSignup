@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
+    "eosjs-ecc": "^4.0.7",
     "pino": "^8.16.1"
   }
 }

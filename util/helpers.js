@@ -1,6 +1,6 @@
 "use strict";
 
-const { readFileSync } = require("fs");
+const { readFileSync, writeFile, writeFileSync } = require("fs");
 const logger = require("./pinologger");
 
 const readAccountsFromTxt = ({ filename }) => {
@@ -30,7 +30,32 @@ const readAccountsFromTxt = ({ filename }) => {
     }
   };
 
+
+  const getPrivKey = () => {
+    try {
+        logger.info(`/util/helpers/getPrivKey start`);
+
+        const accountArray = readAccountsFromTxt({
+            filename: "accounts.txt"
+        });
+        let officerName;
+        let officerKey;
+        for (const account of accountArray) {
+            const {username, key} = readAccount({account});
+            officerName = username;
+            officerKey = key;
+        
+        }
+        logger.info(`/util/helpers/getPrivKey done`);
+        return {officerName, officerKey};
+    } catch (err) {
+        logger.error(`/util/helpers/getPrivKey error: ${err.message}`);
+        throw err;
+    }
+}
+
   module.exports = {
     readAccountsFromTxt,
-    readAccount
+    readAccount,
+    getPrivKey
   }
