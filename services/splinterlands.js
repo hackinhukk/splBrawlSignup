@@ -34,12 +34,10 @@ const getCurrentSignups = async ({tournament_id, access_token, username}) => {
         const res = await axiosInstance(url);
 ;
         logger.info(`res.data: ${JSON.stringify(res.data)}`);
-       // logger.info(`res.data.players.count: ${res.data?.players?.length}, url: ${url}`);
-        // TODO: add in check to see max number of players in brawl
-        const { players } = res.data;
+        const { frays } = res.data;
 
-        return players;
-        exit();
+        logger.info(`/services/getCurrentSignups: ${frays?.length}`);
+        return frays;
     } catch (err) {
         logger.error(`/services/getCurrentSignups error: ${err.message}`);
         throw err;

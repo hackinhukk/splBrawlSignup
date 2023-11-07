@@ -2,7 +2,7 @@
 const logger = require("../util/pinologger");
 const { getBrawlId, getCurrentSignups } = require('../services/splinterlands');
 const {currentSignups} = require("../services/fray");
-const {getAccessToken} = require('../services/signup');
+const {getAccessToken, signUpAccounts} = require('../services/signup');
 
 //getCurrentSignups('GUILD-BC185-BL56-BRAWL2');
 
@@ -18,16 +18,18 @@ const signUp = async() => {
             // this means we can sign up for tournament
             // we first need to check to see if we have a proper JWT token
             // but first lets login and just check this working
-           const {access_token, username} = await getAccessToken();
+           const {access_token, officerName, officerKey} = await getAccessToken();
 
-            const players = await getCurrentSignups({tournament_id, access_token, username});
+            const players = await getCurrentSignups({tournament_id, access_token, username: officerName});
+            logger.info(`players: ${JSON.stringify(players)}`);
             if (players.length === 18) {
                 logger.info(`all fray spots are full, no need to sign anyone up!`);
                 return;
             }
 
-            //const {accountsCleared, accountsMissingPeriod, accountsToReassign, newBrawlers} = currentSignups(players);
-         
+            const { accountsMissingPeriod, accountsToRelist} = currentSignups(players);
+            // TODO: add accounts here
+         await signUpAccounts({tournament_id, officerKey, officerName});
          return;
             if (accountsCleared?.length === 15 && newBrawlers?.length === 0) {
                 logger.info(`All frays are successfully assigned`);

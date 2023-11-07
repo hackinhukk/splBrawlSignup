@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@hiveio/dhive": "^1.2.7",
     "axios": "^1.6.0",
     "dotenv": "^16.3.1",
     "eosjs-ecc": "^4.0.7",

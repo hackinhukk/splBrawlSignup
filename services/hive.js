@@ -12,14 +12,14 @@ const client = new Client([
   ]);
 
 
-const fillBrawlSlots = async ({tournament_id}) => {
+const fillBrawlSlot = async ({tournament_id, officerName, officerKey, player, index}) => {
     try {
-        const username = 'username';
-        const privKey = PrivateKey.from(rawKey);
+       // const username = 'username';
+        const privKey = PrivateKey.from(officerKey);
     
         const res = await client.broadcast.json (
             {
-                required_posting_auths: ["nickmercs"], //whomever the officer assigning the frays is
+                required_posting_auths: [officerName], //whomever the officer assigning the frays is
                 required_auths: [],
                 id: "sm_assign_fray",
                 json: JSON.stringify({
@@ -32,7 +32,7 @@ const fillBrawlSlots = async ({tournament_id}) => {
             privKey
         );
     
-        logger.info(`/services/hive/enterBrawl done for username: ${username}`);
+        logger.info(`/services/hive/enterBrawl done for player: ${player}`);
         return res;
     } catch (err) {
         logger.error(`/services/hive/enterBrawl error: ${err.message}`);
@@ -40,3 +40,7 @@ const fillBrawlSlots = async ({tournament_id}) => {
     }
     
 }
+
+module.exports = {
+    fillBrawlSlot
+};
