@@ -28,7 +28,7 @@ const getCurrentSignups = async (brawlId) => {
         const url = `https://api.splinterlands.com/tournaments/find_brawl?id=${brawlId}&guild_id=649a16fe3b817780c4763175545ab8717d942fcc`;
         const res = await axiosInstance(url);
 ;
-        logger.info(`res.data.players.count: ${res.data.players.length}`);
+        logger.info(`res.data.players.count: ${res.data?.players?.length}, url: ${url}`);
         // TODO: add in check to see max number of players in brawl
         const { players } = res.data;
 

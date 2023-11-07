@@ -67,3 +67,88 @@ this allows us to use the brawl id, and ultimately get the status of the brawl (
 },
 
 we want to get the player, fray index, for example nickmercs should be fray spot 0
+
+
+
+git checkout master
+git pull origin master
+git merge test
+git push origin master
+
+
+
+
+https://api.splinterlands.com/tournaments/find_brawl?id=GUILD-BC186-BL56-BRAWL6&guild_id=649a16fe3b817780c4763175545ab8717d942fcc&token=CPE1VF0DXC&username=hackinhukk
+we actually need to have the login token to get the info of whose signed up for brawls
+
+
+"frays": [
+{
+"cycle": 186,
+"tournament_id": "GUILD-BC186-BL56-BRAWL6",
+"guild_id": "649a16fe3b817780c4763175545ab8717d942fcc",
+"index": 4,
+"player": "mefi13",
+"brawl_level": 5,
+"guild_join_date": "2021-04-02T22:46:18.000Z",
+"avatar_id": 13,
+"title_pre": null,
+"title_post": null,
+"display_name": null,
+"league": 7,
+"modern_league": 0,
+"collection_power": 405020,
+"rank": 1
+},
+{
+"cycle": 186,
+"tournament_id": "GUILD-BC186-BL56-BRAWL6",
+"guild_id": "649a16fe3b817780c4763175545ab8717d942fcc",
+"index": 5,
+"player": "boysofthedwarf",
+"brawl_level": 5,
+"guild_join_date": "2021-06-28T00:02:24.000Z",
+"avatar_id": 18,
+"title_pre": null,
+"title_post": null,
+"display_name": null,
+"league": 0,
+"modern_league": 0,
+"collection_power": 416885,
+"rank": 2
+},
+{
+"cycle": 186,
+"tournament_id": "GUILD-BC186-BL56-BRAWL6",
+"guild_id": "649a16fe3b817780c4763175545ab8717d942fcc",
+"index": 7,
+"player": "giantkiller2p",
+"brawl_level": 5,
+"guild_join_date": "2021-04-26T03:56:24.000Z",
+"avatar_id": 12,
+"title_pre": null,
+"title_post": null,
+"display_name": null,
+"league": 9,
+"modern_league": 0,
+"collection_power": 858471,
+"rank": 3
+},
+{
+"cycle": 186,
+"tournament_id": "GUILD-BC186-BL56-BRAWL6",
+"guild_id": "649a16fe3b817780c4763175545ab8717d942fcc",
+"index": 8,
+"player": "stobbart",
+"brawl_level": 5,
+"guild_join_date": "2021-06-13T05:23:27.000Z",
+"avatar_id": 17,
+"title_pre": null,
+"title_post": null,
+"display_name": null,
+"league": 1,
+"modern_league": 3,
+"collection_power": 194365,
+"rank": 1
+}
+],

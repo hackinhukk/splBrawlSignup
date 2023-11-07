@@ -2,6 +2,7 @@
 const logger = require("../util/pinologger");
 const { getBrawlId, getCurrentSignups } = require('../services/splinterlands');
 const {currentSignups} = require("../services/fray");
+const {getPrivKey} = require('../services/signup');
 
 //getCurrentSignups('GUILD-BC185-BL56-BRAWL2');
 
@@ -12,7 +13,7 @@ const signUp = async() => {
 
         const {tournament_id, tournament_status} = await getBrawlId();
         logger.info(`typeof tournament_status: ${typeof tournament_status}`);
-        if (tournament_status !== 0) {
+        if (tournament_status === 0) {
             // this means we can sign up for tournament
             const players = await getCurrentSignups(tournament_id);
             if (players.length === 18) {
@@ -20,7 +21,25 @@ const signUp = async() => {
                 return;
             }
 
-            const res = currentSignups(players);
+            //const {accountsCleared, accountsMissingPeriod, accountsToReassign, newBrawlers} = currentSignups(players);
+         getPrivKey();
+         return;
+            if (accountsCleared?.length === 15 && newBrawlers?.length === 0) {
+                logger.info(`All frays are successfully assigned`);
+                return;
+            }
+            
+            // for newBrawlers, we need to kick them unless they're in an available fray already.
+            // we kick ones in frays assigned, and then we can move them into available fray slots as we have room, rest are just kicked
+
+            // for accountsCleared, we dont do anything
+            // for accountsMissingPeriod, these are accounts that aren't signed up, but we need to check if they're on the signup list first b4 signing them up
+            // for accountsToReassign, we need to drop them from the current frays, and then assign them to their correct frays
+
+
+
+
+
         } else if (tournament_status === 1) {
             logger.info('brawl is in progress, too late to sign up!');
             return;
@@ -40,4 +59,6 @@ const signUp = async() => {
         throw err;
     }
 }
+
+
 signUp();

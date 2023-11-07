@@ -18,8 +18,9 @@ const currentSignups = (players) => {
         logger.info(`fraysAssinged: ${JSON.stringify(fraysAssigned)}`);
         logger.info(`playersAssigned: ${JSON.stringify(playersAssigned)}`);
 
-        accountsToReassign({playersAssigned, fraysAssigned});
-        return;
+        const {accountsCleared, accountsMissingPeriod, accountsToReassign} = accountsToReassign({playersAssigned, fraysAssigned});
+        const newBrawlers = findNewBrawlers({playersAssigned});
+        return {accountsCleared, accountsMissingPeriod, accountsToReassign, newBrawlers};
     } catch (err) {
         logger.error(`/services/currentSignups error: ${err.message}`);
         throw err;
@@ -31,11 +32,11 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
         logger.info(`/services/accountsToReassign`);
         const accountsCleared = [];
         const accountsToReassign = {};
-        const accountsToBoot = {};
+        //const accountsToBoot = {};
         const accountsMissingPeriod = [];
-     //   for (const player in playersAssigned) {
+        const catchAll = [];
         for (const player in accountsEstablishedFrays) {
-            logger.info(`player: ${player}, playersAssigned[player] : ${playersAssigned[player]}`);
+           // logger.info(`player: ${player}, playersAssigned[player] : ${playersAssigned[player]}`);
             if (!playersAssigned[player] && playersAssigned[player] !== 0) {
                 accountsMissingPeriod.push(player);
                 continue;
@@ -49,19 +50,40 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
             // we could still have the player existing, but hasn't been assigned to correct fray
             if (playersAssigned[player] || playersAssigned[player] === 0) {
                 accountsToReassign[player] = playersAssigned[player];
+                continue;
             } 
+            catchAll.push({player, fray: accountsEstablishedFrays[player]});
         }
         logger.info(`accountsCleared: ${JSON.stringify(accountsCleared)} accountsCleared.length: ${accountsCleared.length}`);
         logger.info(`accountsMissingPeriod :${JSON.stringify(accountsMissingPeriod)}, accountsMissingPeriod.length: ${accountsMissingPeriod.length}`)
         logger.info(`accountsToReassign: ${JSON.stringify(accountsToReassign)}`);
-        logger.info(`/services/accountsToReassign done`);
+     //   logger.info(`catchAll: ${catchAll}, catchAll.length: ${catchAll.length}`);
+        logger.info(`/services/accountsToReassign good: ${catchAll.length === 0}`);
 
-        return;
+        return {accountsCleared, accountsMissingPeriod, accountsToReassign};
     } catch (err) {
         logger.error(`/services/accountsToReassign error: ${err.message}`);
         throw err;
     }
 }
 
-// TNT NOTE: we also need to loop over the playersAssigned and check to see if they're even on the list, if they aren't they need to be moved imo
+const findNewBrawlers = ({playersAssigned}) => {
+    try {
+        logger.info(`/services/findNewBrawlers start`);
+        const newBrawlers = [];
+        
+        for (const player in playersAssigned) {
+            if (!accountsEstablishedFrays[player] && accountsEstablishedFrays !== 0) {
+                newBrawlers.push(player);
+            }
+        }
+
+        logger.info(`/services/findNewBrawlers ${newBrawlers?.length} new brawlers`);
+        return newBrawlers;
+    } catch (err) {
+        logger.error(`/services/findNewBrawlers erorr: ${err.message}`);
+        throw err;
+    }
+}
+
 module.exports = {currentSignups};
