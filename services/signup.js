@@ -4,6 +4,8 @@ const helperService = require('../util/helpers');
 const logger = require("../util/pinologger");
 const { userLogin } = require('./splinterlands');
 const { fillBrawlSlot } = require('./hive');
+const { sleep } = require('../util/axios_retry/general');
+
 const getAccessToken = async() => {
     try {
         logger.info(`/services/signup/getAccessToken start`);
@@ -25,13 +27,13 @@ const getAccessToken = async() => {
 const signUpAccounts = async ({accounts, tournament_id, officerKey, officerName}) => {
     try {
         logger.info(`/services/signup/signupAccounts start`);
-        // for (const [username, index] of Object.entries(accounts)) {
-
-        // }
-        const player = 'hackinhukk';
-        const index = 1;
+         for (const [username, index] of Object.entries(accounts)) {
+            await fillBrawlSlot({tournament_id, officerName, officerKey, player: username, index});
+            await sleep(5000);
+         }
+      
        // const fillBrawlSlot = async ({tournament_id, officerName, officerKey, player, index}) => {
-        await fillBrawlSlot({tournament_id, officerName, officerKey, player, index});
+       
         logger.info(`/services/signup/signupAccounts start done!`);
         return;
     } catch (err) {
@@ -42,11 +44,14 @@ const signUpAccounts = async ({accounts, tournament_id, officerKey, officerName}
 
 // this is for accountsToRelist, should run first but leaving blank for now
 
-const dropFromFrays = async() => {
+const dropFromFrays = async({accounts, tournament_id, officerKey, officerName}) => {
     try {
+        logger.info(`/services/signup/dropFromFrays start`);
 
+        
     } catch (err) {
-
+        logger.error(`/services/signup/dropFromFrays error: ${err.message}`);
+        throw err;
     }
 }
 

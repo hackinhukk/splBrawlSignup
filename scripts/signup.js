@@ -29,7 +29,7 @@ const signUp = async() => {
 
             const { accountsMissingPeriod, accountsToRelist} = currentSignups(players);
             // TODO: add accounts here
-         await signUpAccounts({tournament_id, officerKey, officerName});
+         await signUpAccounts({accounts: accountsMissingPeriod ,tournament_id, officerKey, officerName});
          return;
             if (accountsCleared?.length === 15 && newBrawlers?.length === 0) {
                 logger.info(`All frays are successfully assigned`);

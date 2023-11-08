@@ -152,3 +152,11 @@ we actually need to have the login token to get the info of whose signed up for 
 "rank": 1
 }
 ],
+
+
+
+
+# for removing from fray
+
+
+signed_tx: {"ref_block_num":10078,"ref_block_prefix":22531771,"expiration":"2023-11-07T22:08:00","operations":[["custom_json",{"required_auths":[],"required_posting_auths":["nickmercs"],"id":"sm_leave_fray","json":"{\"guild_id\":\"649a16fe3b817780c4763175545ab8717d942fcc\",\"tournament_id\":\"GUILD-BC186-BL56-BRAWL6\",\"player\":\"hackinhukk\",\"app\":\"splinterlands/0.7.139\",\"n\":\"wcbcHLUGxU\"}"}]],"extensions":[],"signatures":["1f2577f1bd45b9abce8bdcdc7a93c87aae4087d83f500056b0821f76e443520a024b7aeb74abf88145b79259fdedecf01b0ba15b91c7fecdef4a78eae457e76793"]}

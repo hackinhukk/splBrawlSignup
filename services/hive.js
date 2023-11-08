@@ -33,7 +33,7 @@ const fillBrawlSlot = async ({tournament_id, officerName, officerKey, player, in
         );
     
         logger.info(`/services/hive/enterBrawl done for player: ${player}`);
-        return res;
+        return;
     } catch (err) {
         logger.error(`/services/hive/enterBrawl error: ${err.message}`);
         throw err;
@@ -41,6 +41,33 @@ const fillBrawlSlot = async ({tournament_id, officerName, officerKey, player, in
     
 }
 
+const removeBrawlSlot = async ({officerName, officerKey, tournament_id, player}) => {
+    try {
+        logger.info(`/services/hive/removeBrawlSlot start`);
+        const privKey = PrivateKey.from(officerKey);
+
+        const res = await client.broadcast.json ( {
+            required_posting_auths: [officerName],
+            required_auths: [],
+            id: "sm_leave_fray",
+            json: JSON.stringify({
+                guild_id: _GUILD_ID,
+                tournament_id,
+                player
+            }),
+        },
+        privKey
+        );
+
+        logger.info(`/services/hive/removeBrawlSlot done for player: ${player}`);
+        return;
+    } catch (err) {
+        logger.error(`/services/hive/removeBrawlSlot error: ${err.message}`);
+        throw err;
+    }
+}
+
 module.exports = {
-    fillBrawlSlot
+    fillBrawlSlot,
+    removeBrawlSlot
 };

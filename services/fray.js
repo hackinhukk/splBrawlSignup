@@ -33,14 +33,11 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
         logger.info(`/services/accountsToReassign`);
         const accountsCleared = [];
         const accountsToRelist = {};
-        //const accountsToBoot = {};
         const accountsMissingPeriod = {};
         const catchAll = [];
         for (const player in accountsEstablishedFrays) {
-           // logger.info(`player: ${player}, playersAssigned[player] : ${playersAssigned[player]}`);
             if (!playersAssigned[player] && playersAssigned[player] !== 0) {
                 accountsMissingPeriod[player] = accountsEstablishedFrays[player];
-             //   accountsMissingPeriod.push(player);
                 continue;
             }
             // player hasn't been assigned
@@ -59,7 +56,6 @@ const accountsToReassign = ({playersAssigned, fraysAssigned}) => {
         logger.info(`accountsCleared: ${JSON.stringify(accountsCleared)} accountsCleared.length: ${accountsCleared.length}`);
         logger.info(`accountsMissingPeriod :${JSON.stringify(accountsMissingPeriod)}, accountsMissingPeriod.length: ${Object.keys(accountsMissingPeriod).length}`)
         logger.info(`accountsToRelist: ${JSON.stringify(accountsToRelist)}`);
-     //   logger.info(`catchAll: ${catchAll}, catchAll.length: ${catchAll.length}`);
         logger.info(`/services/accountsToReassign good: ${catchAll.length === 0}`);
 
         return { accountsMissingPeriod, accountsToRelist};
